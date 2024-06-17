@@ -59,7 +59,7 @@ export default function UserRoutes(app) {
     const currentUser = await dao.findUserByCredentials(username, password);
     console.log("current user is: "+currentUser);
     if (currentUser) {
-      req.session.currentUser = currentUser;
+      req.session["currentUser"] = currentUser;
       res.json(currentUser);
     } else {
       res.status(401).json({ message: "Unable to login. Try again later." });
@@ -75,8 +75,9 @@ export default function UserRoutes(app) {
 
   
   const profile = (req, res) => {
-    const currentUser = req.session.currentUser;
-    console.log("session: " + req.session.currentUser);
+    const currentUser = req.session["currentUser"];
+    console.log("session: " + req.session);
+    console.log("session user: " + req.session["currentUser"])
     console.log("current user profile is: "+currentUser);
     if (!currentUser) {
       res.sendStatus(401);
