@@ -9,7 +9,7 @@ import ModuleRoutes from './Kanbas/Modules/routes.js';
 import cors from "cors";
 import session from "express-session";
 import AssignmentRoutes from './Kanbas/Assignments/routes.js';
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING
 mongoose.connect(CONNECTION_STRING);
 const app = express()
 app.use(cors({
