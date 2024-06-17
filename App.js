@@ -10,7 +10,13 @@ import cors from "cors";
 import session from "express-session";
 import AssignmentRoutes from './Kanbas/Assignments/routes.js';
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING
-mongoose.connect(CONNECTION_STRING);
+mongoose.connect(CONNECTION_STRING) .then(() => {
+  console.log('Connected to MongoDB');
+  // Implement further debug messages for queries or operations
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});;
 const app = express()
 app.use(cors({
     credentials: true,
