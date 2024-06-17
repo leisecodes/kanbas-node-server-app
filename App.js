@@ -12,6 +12,7 @@ import AssignmentRoutes from './Kanbas/Assignments/routes.js';
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING
 mongoose.connect(CONNECTION_STRING) .then(() => {
   console.log('Connected to MongoDB');
+  console.log("string is: "+ CONNECTION_STRING)
   // Implement further debug messages for queries or operations
 })
 .catch((error) => {
