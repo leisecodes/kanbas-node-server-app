@@ -6,6 +6,7 @@ import Hello from './hello.js';
 import Lab5 from './Lab5/index.js';
 import CourseRoutes from './Kanbas/courses/routes.js';
 import ModuleRoutes from './Kanbas/Modules/routes.js';
+import QuizRoutes from "./Kanbas/Quizzes/routes.js";
 import cors from "cors";
 import session from "express-session";
 import AssignmentRoutes from './Kanbas/Assignments/routes.js';
@@ -45,6 +46,7 @@ UserRoutes(app);
 AssignmentRoutes(app);
 ModuleRoutes(app);
 CourseRoutes(app);
+QuizRoutes(app);
 Hello(app);
 Lab5(app);
 app.listen(process.env.PORT || 4000)
