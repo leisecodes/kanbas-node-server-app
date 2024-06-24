@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true},
@@ -15,6 +16,18 @@ const userSchema = new mongoose.Schema({
     section: String,
     lastActivity: String,
     totalActivity: String,
+    enrolledCourses: [{ type: String, ref: 'CourseModel' }],
+    createdCourses: [{ type: String, ref: 'CourseModel' }],
+    quizAttempts: [{
+        quiz: { type: mongoose.Schema.Types.ObjectId, ref: 'QuizModel' },
+        score: Number,
+        answers: [{
+            question: { type: mongoose.Schema.Types.ObjectId, ref: 'QuestionModel' },
+            selectedAnswers: [String], // or you can use ObjectId if answer choices are referenced
+            isCorrect: Boolean
+        }],
+        attemptDate: { type: Date, default: Date.now }
+    }]
 
 }, 
 { collection: "users" }

@@ -86,14 +86,86 @@ export default function UserRoutes(app) {
     res.json(currentUser);
   };
 
+  
+const getEnrolledCourses = async (req, res) => {
+  const { userId } = req.params;
+  try {
+      const current = await dao.getEnrolledCourses(userId);
+      res.json(current);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
+const getCreatedCourses = async (req, res) => {
+  const { userId } = req.params;
+  try {
+      const current = await dao.getCreatedCourses(userId);
+      res.json(current);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
+const enrollInCourse = async (req, res) => {
+  const { userId, courseId } = req.params;
+  try {
+    const courses = await dao.enrollInCourse(userId, courseId);
+    res.json(courses);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const unenrollFromCourse = async (req, res) => {
+  const { userId, courseId } = req.params;
+  try {
+    const courses = await dao.unenrollFromCourse(userId, courseId);
+    res.json(courses);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const addQuizAttempt = async (req, res) => {
+  const { userId } = req.params;
+  const attemptData = req.body;
+  try {
+  const newAttempt = await dao.addQuizAttempt(userId, attemptData);
+  res.status(201).json(newAttempt);
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getQuizAttempts = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const attempts = await dao.getQuizAttempts(userId);
+    res.json(attempts);
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
   app.post("/api/users", createUser);
+  app.post("/api/users/:userId/quiz-attempts", addQuizAttempt);
+  app.get("api/users/:userId/quiz-attempts", getQuizAttempts);
   app.get("/api/users", findAllUsers);
   app.get("/api/users/:userId", findUserById);
+  app.get('/api/users/:userId/enrolled-courses', getEnrolledCourses);
+  app.get('/api/users/:userId/created-courses', getCreatedCourses);
   app.put("/api/users/:userId", updateUser);
+  app.put('/api/users/:userId/enroll/:courseId', enrollInCourse);
+  app.put('/api/users/:userId/unenroll/:courseId', unenrollFromCourse);
   app.delete("/api/users/:userId", deleteUser);
   app.post("/api/users/signup", signup);
   app.post("/api/users/signin", signin);
   app.post("/api/users/signout", signout);
   app.post("/api/users/profile", profile);
+
+  
 }
